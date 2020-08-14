@@ -1,0 +1,16 @@
+#cloud-config
+runcmd:
+ # Note: Don't write files to /tmp from cloud-init use /run/somedir instead.
+ # Early boot environments can race systemd-tmpfiles-clean LP: #1707222.
+ - local json=$(cat /var/lib/cloud/instance/conf_location_details.json)
+ - export confLocation=$(echo $json | jq -r .confLocation)
+ - export sasToken=$(echo $json | jq -r .sasToken)
+ - export httpsTermination=$(echo $json | jq -r .httpsTermination)
+ - export moodleStackConfigurationDownloadPath=$(echo $json | jq -r .moodleStackConfigurationDownloadPath)
+ - mkdir $moodleStackConfigurationDownloadPath
+ - moodleVcl = "${confLocation}moodle.vcl${sasToken}"
+ - [ wget, $moodleVcl}, -O, ${moodleStackConfigurationDownloadPath}/moodle.vcl ]
+ - if [ "$httpsTermination" = "None" ]; then nginxConfUri = "${confLocation}nginx-httpsTermination-none.conf${sasToken}"; else nginxConfUri = "${confLocation}nginx-httpsTermination-default.conf${sasToken}"; fi
+ - [ wget, $nginxConfUri, -O, ${moodleStackConfigurationDownloadPath}/nginx.conf ]
+ - if [ "$httpsTermination" = "VMSS" ]; then siteFqdn = "${confLocation}siteFQDN-httpsTermination-vmss.conf${sasToken}"; elif [ "$httpsTermination" = "None" ]; siteFqdn = "${confLocation}siteFQDN-httpsTermination-none.conf${sasToken}"; else siteFqdn = "${confLocation}siteFQDN-httpsTermination-default.conf${sasToken}"; fi
+ - [ wget, $siteFqdn, -O, ${moodleStackConfigurationDownloadPath}/siteFqdn.conf ]
