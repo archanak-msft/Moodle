@@ -45,7 +45,7 @@
         "vmConfLocationDetails": {
             "cloudInitScriptLocation": "[parameters('moodleCommon').cloudInitScriptLocation]",
             "confLocation": "[parameters('moodleCommon').confiurationLocation]",
-            "sasToken": "[parameters('moodleCommon').artifactsSasToken]",
+            "artifactsSasToken": "[parameters('moodleCommon').artifactsSasToken]",
             "httpsTermination": "[parameters('moodleCommon').httpsTermination]",
             "moodleStackConfigurationDownloadPath": "[parameters('moodleCommon').moodleStackConfigurationDownloadPath]"
         },
