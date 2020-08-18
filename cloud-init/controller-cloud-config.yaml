@@ -1,4 +1,3 @@
-#cloud-config
 runcmd:
  # Note: Don't write files to /tmp from cloud-init use /run/somedir instead.
  # Early boot environments can race systemd-tmpfiles-clean LP: #1707222.
