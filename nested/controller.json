@@ -20,12 +20,6 @@
             },
             "type": "string"
         },
-        "vmConfLocationDetails": {
-            "metadata": {
-                "description": "JSON-structured details of the paths from where all the relevant configurations will be downloaded by cloud-init."
-            },
-            "type": "object"
-        },
         "vmSetupParamsObj": {
             "metadata": {
                 "description": "JSON-structured VM setup params that'll be injected to the VM (through cloud-init) and used by the custom script (install_moodle.sh)"
@@ -128,7 +122,7 @@
                     "adminUsername": "[parameters('moodleCommon').sshUsername]",
                     "computerName": "[parameters('moodleCommon').ctlrVmName]",
                     "secrets": "[parameters('moodleCommon').ctlrVmSecrets]",
-                    "customData": "[base64(concat('#cloud-config\nwrite_files:\n- encoding: b64\n  content: ', base64(string(parameters('vmSetupParamsObj'))), '\n  owner: root:root\n  path: ', parameters('moodleCommon').moodleOnAzureConfigsJsonPath, '\n  permissions: ', variables('singleQuote'), '0400', variables('singleQuote'), '\n- encoding: b64\n  content: ', base64(string(parameters('vmConfLocationDetails'))), '\n  owner: root:root\n  path: ', parameters('moodleCommon').moodleStackConfigurationLocationJsonPath, '\n  permissions: ', variables('singleQuote'), '0400', variables('singleQuote'), '\n#include\n', uri(parameters('vmConfLocationDetails').cloudInitScriptLocation,  concat('controller-cloud-config.yaml', parameters('vmConfLocationDetails').artifactsSasToken))))]",
+                     "customData": "[base64(concat('#cloud-config\nwrite_files:\n- encoding: b64\n  content: ', base64(string(parameters('vmSetupParamsObj'))), '\n  owner: root:root\n  path: ', parameters('moodleCommon').moodleOnAzureConfigsJsonPath, '\n  permissions: ', variables('singleQuote'), '0400', variables('singleQuote')))]",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": true,
                         "ssh": {

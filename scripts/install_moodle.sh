@@ -68,6 +68,40 @@ set -ex
     echo fileServerDiskSize $fileServerDiskSize >>/tmp/vars.txt
     echo phpVersion $phpVersion         >> /tmp/vars.txt
     echo moodleStackConfigurationDownloadPath $moodleStackConfigurationDownloadPath >> /tmp/vars.txt
+    echo confLocation $confLocation >> /tmp/vars.txt
+    echo artifactsSasToken $artifactsSasToken >> /tmp/vars.txt
+
+    #Download requied configurations
+    mkdir $moodleStackConfigurationDownloadPath
+
+    moodleVclUrl = "${confLocation}moodle.vcl${artifactsSasToken}"
+    wget $moodleVclUrl -o ${moodleStackConfigurationDownloadPath}/moodle.vcl
+
+
+
+    if [ "$httpsTermination" = "None" ]; then 
+      nginxConfFileName = "nginx-httpsTermination-none.conf"
+    else 
+      nginxConfFileName = "nginx-httpsTermination-default.conf"
+    fi
+
+    nginxConfUri = "${confLocation}${nginxConfFileName}${artifactsSasToken}"
+    wget $nginxConfUri -o ${moodleStackConfigurationDownloadPath}/nginx.conf
+
+
+    if [ "$httpsTermination" = "VMSS" ]; then
+      siteFqdnFileName = "siteFQDN-httpsTermination-vmss.conf"
+    elif [ "$httpsTermination" = "None" ]; then
+      siteFqdnFileName = "siteFQDN-httpsTermination-none.conf"
+    else
+      siteFqdnFileName = "siteFQDN-httpsTermination-default.conf"
+    fi
+
+    siteFqdnUri = "${confLocation}${siteFqdnFileName}${artifactsSasToken}"
+    wget $nginxConfUri -o ${moodleStackConfigurationDownloadPath}/nginx.conf
+
+
+
 
     check_fileServerType_param $fileServerType
 

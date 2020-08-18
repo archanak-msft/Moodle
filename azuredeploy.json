@@ -978,9 +978,6 @@
                     "ctlrPubIpId": {
                         "value": "[reference('networkTemplate').outputs.ctlrPubIpId.value]"
                     },
-                    "vmConfLocationDetails": {
-                        "value": "[reference('vmSetupParamsTemplate').outputs.vmConfLocationDetails.value]"
-                    },
                     "vmSetupParamsObj": {
                         "value": "[reference('vmSetupParamsTemplate').outputs.vmSetupParamsObj.value]"
                     }
@@ -1082,7 +1079,6 @@
             "baseTemplateUrl": "[concat(parameters('_artifactsLocation'), 'nested/')]",
             "scriptLocation": "[concat(parameters('_artifactsLocation'), 'scripts/')]",
             "confiurationLocation": "[concat(parameters('_artifactsLocation'), 'conf/')]",
-            "cloudInitScriptLocation": "[concat(parameters('_artifactsLocation'), 'cloud-init/')]",
             "artifactsSasToken": "[parameters('_artifactsLocationSasToken')]",
             "appGwBePoolName": "[concat('appgw-bepool-', variables('resourceprefix'))]",
             "appGwName": "[concat('appgw-', variables('resourceprefix'))]",
@@ -1166,7 +1162,6 @@
             "moodleDbUserAzure": "[concat('moodle', '@', parameters('dbServerType'), '-', variables('resourceprefix'))]",
             "moodleInstallScriptFilename": "install_moodle.sh",
             "moodleOnAzureConfigsJsonPath": "/var/lib/cloud/instance/moodle_on_azure_configs.json",
-            "moodleStackConfigurationLocationJsonPath": "/var/lib/cloud/instance/conf_location_details.json",
             "moodleStackConfigurationDownloadPath": "/run/downloaded-conf",
             "moodleVersion": "[parameters('moodleVersion')]",
             "mssqlDbServiceObjectiveName": "[parameters('mssqlDbServiceObjectiveName')]",

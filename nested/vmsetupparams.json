@@ -42,16 +42,11 @@
     "resources": [],
     "variables": {
         "documentation01": "This sub-template doesn't create any Azure resource, but just constructs/returns a JSON object that'll be injected to controller & VMSS VMs (through cloud-init) so that VM setup custom script can read/use, instead of receiving these as a long list of cmdline args",
-        "vmConfLocationDetails": {
-            "cloudInitScriptLocation": "[parameters('moodleCommon').cloudInitScriptLocation]",
-            "confLocation": "[parameters('moodleCommon').confiurationLocation]",
-            "artifactsSasToken": "[parameters('moodleCommon').artifactsSasToken]",
-            "httpsTermination": "[parameters('moodleCommon').httpsTermination]",
-            "moodleStackConfigurationDownloadPath": "[parameters('moodleCommon').moodleStackConfigurationDownloadPath]"
-        },
         "vmSetupParamsObj": {
             "confPaths": {
-                "moodleStackConfigurationDownloadPath": "[parameters('moodleCommon').moodleStackConfigurationDownloadPath]"
+                "moodleStackConfigurationDownloadPath": "[parameters('moodleCommon').moodleStackConfigurationDownloadPath]",
+                "confLocation": "[parameters('moodleCommon').confiurationLocation]",
+                "artifactsSasToken": "[parameters('moodleCommon').artifactsSasToken]"
             },
             "siteProfile": {
                 "siteURL": "[parameters('moodleCommon').siteURL]",
@@ -111,10 +106,6 @@
     "outputs": {
         "vmSetupParamsObj": {
             "value": "[variables('vmSetupParamsObj')]",
-            "type": "object"
-        },
-        "vmConfLocationDetails": {
-            "value": "[variables('vmConfLocationDetails')]",
             "type": "object"
         }
     }
