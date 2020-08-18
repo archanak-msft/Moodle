@@ -317,7 +317,7 @@ set -ex
     chmod 755 /tmp/setup-moodle.sh
     /tmp/setup-moodle.sh >> /tmp/setupmoodle.log
 
-    # Build nginx and siteFqdn config by copying it from the location where cloud-int places it
+    # Build nginx and siteFqdn config by copying it from the location where these are copied.
     # and then by replacing the variable values
     nginxConfLocation = "/etc/nginx/nginx.conf"
     cp ${moodleStackConfigurationDownloadPath}/nginx.conf nginxConfLocation
