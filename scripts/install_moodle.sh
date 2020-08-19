@@ -75,7 +75,7 @@ set -ex
     mkdir $moodleStackConfigurationDownloadPath
 
     moodleVclUrl = "${confLocation}moodle.vcl${artifactsSasToken}"
-    wget "${moodleVclUrl} -O "${moodleStackConfigurationDownloadPath}/moodle.vcl"
+    wget "'${moodleVclUrl}'" -O "${moodleStackConfigurationDownloadPath}/moodle.vcl"
 
 
 
@@ -86,7 +86,7 @@ set -ex
     fi
 
     nginxConfUri = "${confLocation}${nginxConfFileName}${artifactsSasToken}"
-    wget "${nginxConfUri}" -O "${moodleStackConfigurationDownloadPath}/nginx.conf"
+    wget "'${nginxConfUri}'" -O "${moodleStackConfigurationDownloadPath}/nginx.conf"
 
 
     if [ "$httpsTermination" = "VMSS" ]; then
@@ -98,7 +98,7 @@ set -ex
     fi
 
     siteFqdnUri = "${confLocation}${siteFqdnFileName}${artifactsSasToken}"
-    wget "${nginxConfUri}" -O "${moodleStackConfigurationDownloadPath}/nginx.conf"
+    wget "'${nginxConfUri}'" -O "${moodleStackConfigurationDownloadPath}/nginx.conf"
 
 
 
