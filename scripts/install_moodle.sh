@@ -128,7 +128,7 @@ set -ex
     fi
 
     siteFqdnUri="${confLocation}${siteFqdnFileName}${artifactsSasToken}"
-    wget ${nginxConfUri} -O "${moodleStackConfigurationDownloadPath}/siteFQDN.conf"
+    wget ${nginxConfUri} -O "${moodleStackConfigurationDownloadPath}/siteFqdn.conf"
 
 
     # create gluster, nfs or Azure Files mount point
@@ -315,7 +315,7 @@ set -ex
     chmod 755 /tmp/setup-moodle.sh
     /tmp/setup-moodle.sh >> /tmp/setupmoodle.log
 
-    # Build nginx and siteFqdn config by copying it from the location where these are copied.
+    # Build nginx and siteFqdn config by copying it from downloaded location
     # and then by replacing the variable values
     nginxConfLocation="/etc/nginx/nginx.conf"
     cp ${moodleStackConfigurationDownloadPath}/nginx.conf nginxConfLocation
