@@ -71,38 +71,6 @@ set -ex
     echo confLocation $confLocation >> /tmp/vars.txt
     echo artifactsSasToken $artifactsSasToken >> /tmp/vars.txt
 
-    #Download requied configurations
-    mkdir -p $moodleStackConfigurationDownloadPath
-
-    moodleVclUrl="${confLocation}moodle.vcl${artifactsSasToken}"
-    wget ${moodleVclUrl} -O "${moodleStackConfigurationDownloadPath}/moodle.vcl"
-
-
-
-    if [ "$httpsTermination" = "None" ]; then 
-      nginxConfFileName="nginx-httpsTermination-none.conf"
-    else 
-      nginxConfFileName="nginx-httpsTermination-default.conf"
-    fi
-
-    nginxConfUri="${confLocation}${nginxConfFileName}${artifactsSasToken}"
-    wget ${nginxConfUri} -O "${moodleStackConfigurationDownloadPath}/nginx.conf"
-
-
-    if [ "$httpsTermination" = "VMSS" ]; then
-      siteFqdnFileName="siteFQDN-httpsTermination-vmss.conf"
-    elif [ "$httpsTermination" = "None" ]; then
-      siteFqdnFileName="siteFQDN-httpsTermination-none.conf"
-    else
-      siteFqdnFileName="siteFQDN-httpsTermination-default.conf"
-    fi
-
-    siteFqdnUri="${confLocation}${siteFqdnFileName}${artifactsSasToken}"
-    wget ${nginxConfUri} -O "${moodleStackConfigurationDownloadPath}/nginx.conf"
-
-
-
-
     check_fileServerType_param $fileServerType
 
     #Updating php sources
@@ -132,6 +100,36 @@ set -ex
     sudo apt-get -y install unattended-upgrades fail2ban
 
     config_fail2ban
+    
+    #Create directory for conf files to download
+    mkdir -p $moodleStackConfigurationDownloadPath
+
+    # Download moodle.vcl
+    moodleVclUrl="${confLocation}moodle.vcl${artifactsSasToken}"
+    wget ${moodleVclUrl} -O "${moodleStackConfigurationDownloadPath}/moodle.vcl"
+
+    # Download nginx.conf
+    if [ "$httpsTermination" = "None" ]; then 
+      nginxConfFileName="nginx-httpsTermination-none.conf"
+    else 
+      nginxConfFileName="nginx-httpsTermination-default.conf"
+    fi
+
+    nginxConfUri="${confLocation}${nginxConfFileName}${artifactsSasToken}"
+    wget ${nginxConfUri} -O "${moodleStackConfigurationDownloadPath}/nginx.conf"
+
+    # Download siteFQDN.conf
+    if [ "$httpsTermination" = "VMSS" ]; then
+      siteFqdnFileName="siteFQDN-httpsTermination-vmss.conf"
+    elif [ "$httpsTermination" = "None" ]; then
+      siteFqdnFileName="siteFQDN-httpsTermination-none.conf"
+    else
+      siteFqdnFileName="siteFQDN-httpsTermination-default.conf"
+    fi
+
+    siteFqdnUri="${confLocation}${siteFqdnFileName}${artifactsSasToken}"
+    wget ${nginxConfUri} -O "${moodleStackConfigurationDownloadPath}/siteFQDN.conf"
+
 
     # create gluster, nfs or Azure Files mount point
     mkdir -p /moodle
@@ -319,12 +317,12 @@ set -ex
 
     # Build nginx and siteFqdn config by copying it from the location where these are copied.
     # and then by replacing the variable values
-    nginxConfLocation = "/etc/nginx/nginx.conf"
+    nginxConfLocation="/etc/nginx/nginx.conf"
     cp ${moodleStackConfigurationDownloadPath}/nginx.conf nginxConfLocation
     sed -i "s/\${siteFQDN}/${siteFQDN}/g" nginxConfLocation
     sed -i "s/\${PhpVer}/${PhpVer}/g" nginxConfLocation
 
-    siteFqdnConfLocation = "/etc/nginx/sites-enabled/${siteFQDN}.conf"
+    siteFqdnConfLocation="/etc/nginx/sites-enabled/${siteFQDN}.conf"
     cp ${moodleStackConfigurationDownloadPath}/siteFqdn.conf siteFqdnConfLocation
     sed -i "s/\${siteFQDN}/${siteFQDN}/g" siteFqdnConfLocation
     sed -i "s/\${PhpVer}/${PhpVer}/g" siteFqdnConfLocation
