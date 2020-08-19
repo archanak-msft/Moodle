@@ -90,7 +90,7 @@ set -ex
 
 
     if [ "$httpsTermination" = "VMSS" ]; then
-      siteFqdnFileName= "siteFQDN-httpsTermination-vmss.conf"
+      siteFqdnFileName="siteFQDN-httpsTermination-vmss.conf"
     elif [ "$httpsTermination" = "None" ]; then
       siteFqdnFileName="siteFQDN-httpsTermination-none.conf"
     else
