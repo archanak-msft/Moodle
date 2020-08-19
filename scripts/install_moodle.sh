@@ -318,14 +318,14 @@ set -ex
     # Build nginx and siteFqdn config by copying it from downloaded location
     # and then by replacing the variable values
     nginxConfLocation="/etc/nginx/nginx.conf"
-    cp ${moodleStackConfigurationDownloadPath}/nginx.conf nginxConfLocation
-    sed -i "s/\${siteFQDN}/${siteFQDN}/g" nginxConfLocation
-    sed -i "s/\${PhpVer}/${PhpVer}/g" nginxConfLocation
+    cp ${moodleStackConfigurationDownloadPath}/nginx.conf $nginxConfLocation
+    sed -i "s/\${siteFQDN}/${siteFQDN}/g" $nginxConfLocation
+    sed -i "s/\${PhpVer}/${PhpVer}/g" $nginxConfLocation
 
     siteFqdnConfLocation="/etc/nginx/sites-enabled/${siteFQDN}.conf"
-    cp ${moodleStackConfigurationDownloadPath}/siteFqdn.conf siteFqdnConfLocation
-    sed -i "s/\${siteFQDN}/${siteFQDN}/g" siteFqdnConfLocation
-    sed -i "s/\${PhpVer}/${PhpVer}/g" siteFqdnConfLocation
+    cp ${moodleStackConfigurationDownloadPath}/siteFqdn.conf $siteFqdnConfLocation
+    sed -i "s/\${siteFQDN}/${siteFQDN}/g" $siteFqdnConfLocation
+    sed -i "s/\${PhpVer}/${PhpVer}/g" $siteFqdnConfLocation
 
     if [ "$httpsTermination" = "VMSS" ]; then
         ### SSL cert ###
