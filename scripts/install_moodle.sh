@@ -72,7 +72,7 @@ set -ex
     echo artifactsSasToken $artifactsSasToken >> /tmp/vars.txt
 
     #Download requied configurations
-    mkdir $moodleStackConfigurationDownloadPath
+    mkdir -p $moodleStackConfigurationDownloadPath
 
     moodleVclUrl="${confLocation}moodle.vcl${artifactsSasToken}"
     wget "'${moodleVclUrl}'" -O "${moodleStackConfigurationDownloadPath}/moodle.vcl"
