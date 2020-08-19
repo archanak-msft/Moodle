@@ -128,7 +128,7 @@ set -ex
     fi
 
     siteFqdnUri="${confLocation}${siteFqdnFileName}${artifactsSasToken}"
-    wget ${nginxConfUri} -O "${moodleStackConfigurationDownloadPath}/siteFqdn.conf"
+    wget ${siteFqdnUri} -O "${moodleStackConfigurationDownloadPath}/siteFqdn.conf"
 
 
     # create gluster, nfs or Azure Files mount point
