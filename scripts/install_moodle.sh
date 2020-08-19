@@ -74,27 +74,27 @@ set -ex
     #Download requied configurations
     mkdir $moodleStackConfigurationDownloadPath
 
-    moodleVclUrl = "${confLocation}moodle.vcl${artifactsSasToken}"
+    moodleVclUrl="${confLocation}moodle.vcl${artifactsSasToken}"
     wget "'${moodleVclUrl}'" -O "${moodleStackConfigurationDownloadPath}/moodle.vcl"
 
 
 
     if [ "$httpsTermination" = "None" ]; then 
-      nginxConfFileName = "nginx-httpsTermination-none.conf"
+      nginxConfFileName="nginx-httpsTermination-none.conf"
     else 
-      nginxConfFileName = "nginx-httpsTermination-default.conf"
+      nginxConfFileName="nginx-httpsTermination-default.conf"
     fi
 
-    nginxConfUri = "${confLocation}${nginxConfFileName}${artifactsSasToken}"
+    nginxConfUri="${confLocation}${nginxConfFileName}${artifactsSasToken}"
     wget "'${nginxConfUri}'" -O "${moodleStackConfigurationDownloadPath}/nginx.conf"
 
 
     if [ "$httpsTermination" = "VMSS" ]; then
-      siteFqdnFileName = "siteFQDN-httpsTermination-vmss.conf"
+      siteFqdnFileName= "siteFQDN-httpsTermination-vmss.conf"
     elif [ "$httpsTermination" = "None" ]; then
-      siteFqdnFileName = "siteFQDN-httpsTermination-none.conf"
+      siteFqdnFileName="siteFQDN-httpsTermination-none.conf"
     else
-      siteFqdnFileName = "siteFQDN-httpsTermination-default.conf"
+      siteFqdnFileName="siteFQDN-httpsTermination-default.conf"
     fi
 
     siteFqdnUri = "${confLocation}${siteFqdnFileName}${artifactsSasToken}"
