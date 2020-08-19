@@ -97,7 +97,7 @@ set -ex
       siteFqdnFileName="siteFQDN-httpsTermination-default.conf"
     fi
 
-    siteFqdnUri = "${confLocation}${siteFqdnFileName}${artifactsSasToken}"
+    siteFqdnUri="${confLocation}${siteFqdnFileName}${artifactsSasToken}"
     wget "'${nginxConfUri}'" -O "${moodleStackConfigurationDownloadPath}/nginx.conf"
 
 
